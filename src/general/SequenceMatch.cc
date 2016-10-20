@@ -1,5 +1,5 @@
 #include "SequenceMatch.h"
-#include "util/mutil.h"
+#include "../util/mutil.h"
 
 #include "../base/FileParser.h"
 
