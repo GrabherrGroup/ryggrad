@@ -10,7 +10,7 @@
 
 #include "StringUtil.h"
 #include "FileParser.h"
-#include "../extern/logger/log.h"
+#include "Logger.h"
 
 using namespace std;
 

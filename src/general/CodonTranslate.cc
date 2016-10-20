@@ -1,5 +1,5 @@
 #include "CodonTranslate.h"
-#include "../base/Log.h"
+#include "../base/Logger.h"
 
 int CodonTranslator::GetIndex(char one, char two, char three) const {
   

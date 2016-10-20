@@ -6,7 +6,7 @@
 #include "../base/FileParser.h"
 #include "util/mutil.h"
 #include "Coordinate.h"
-#include "../base/Log.h"
+#include "../base/Logger.h"
 
 #define ONE_THIRD 1./3.
 

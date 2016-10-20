@@ -1,15 +1,15 @@
 
 #define FORCE_DEBUG
-#include "../visual/Whiteboard.h"
+#include "../src/visual/Whiteboard.h"
 
-#include "../base/CommandLineParser.h"
-#include "../base/FileParser.h"
-#include "../base/SVector.h"
-#include "../visual/Color.h"
+#include "../src/base/CommandLineParser.h"
+#include "../src/base/FileParser.h"
+#include "../src/base/SVector.h"
+#include "../src/visual/Color.h"
 
-#include "../visual/Axes.h"
-#include "../visual/Geometry.h"
-#include "../visual/Compounds.h"
+#include "../src/visual/Axes.h"
+#include "../src/visual/Geometry.h"
+#include "../src/visual/Compounds.h"
 
 #include <iostream>
 
