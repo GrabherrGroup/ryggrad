@@ -4,8 +4,8 @@
 #include "../base/CommandLineParser.h"
 #include "../base/FileParser.h"
 
-#include "base/SVector.h"
-#include "visual/Color.h"
+#include "../base/SVector.h"
+#include "Color.h"
 
 
 #include <iostream>
