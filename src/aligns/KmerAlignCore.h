@@ -5,7 +5,7 @@
 #define _KMERALIGNCORE_H_
 
 
-#include "../src/DNAVector.h"
+#include "../src/general/DNAVector.h"
 
 
 //==========================================
