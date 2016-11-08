@@ -38,9 +38,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 /*\\\ INCLUDE FILES \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
 
-#include	"extern/RealFFT/def.h"
-#include	"extern/RealFFT/FFTRealFixLenParam.h"
-#include	"extern/RealFFT/OscSinCos.h"
+#include	"def.h"
+#include	"FFTRealFixLenParam.h"
+#include	"OscSinCos.h"
 
 
 

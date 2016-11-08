@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 /*\\\ INCLUDE FILES \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
 
-#include	"extern/RealFFT/def.h"
+#include	"def.h"
 
 
 
@@ -66,7 +66,7 @@ private:
 
 
 
-#include	"extern/RealFFT/FFTRealSelect.hpp"
+#include	"FFTRealSelect.hpp"
 
 
 
