@@ -5,12 +5,12 @@
 
 
  
+#include <math.h>
+#include "../extern/RealFFT/FFTReal.hpp"
 #include "CrossCorr.h"
 #include "DNAVector.h"
 #include "CodonTranslate.h"
-#include "extern/RealFFT/FFTReal.hpp"
 #include "Blosum.h"
-#include <math.h>
 
 
 

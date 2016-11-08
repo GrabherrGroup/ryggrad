@@ -1,8 +1,7 @@
 #ifndef _CROSSCORR_H_
 #define _CROSSCORR_H_
 
-//#include "../base/SVector.h"
-#include "extern/RealFFT/FFTReal.h"
+#include "../extern/RealFFT/FFTReal.h"
 #include "DNAVector.h"
 
 
