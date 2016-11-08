@@ -6,7 +6,7 @@
 
  
 #include <math.h>
-#include "../extern/RealFFT/FFTReal.hpp"
+#include "../../extern/RealFFT/FFTReal.hpp"
 #include "CrossCorr.h"
 #include "DNAVector.h"
 #include "CodonTranslate.h"
