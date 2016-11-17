@@ -60,6 +60,8 @@ string GetType()
     return "double";
   else if ( type.find("ISs") != string::npos )
     return "string";
+  else if ( type.find("INSt") != string::npos )
+    return "string";
   else
     return "unknown type";
 }

@@ -145,7 +145,7 @@ int main( int argc, char** argv )
 {
  
   commandArg<string> iStringO("-i","input");
-  commandArg<string> aStringO("-o","outfile (post-script)");
+  commandArg<string> aStringO("-o","outfile (post-script)", "out.ps");
  
   
   commandLineParser P(argc,argv);
