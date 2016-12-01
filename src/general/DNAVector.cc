@@ -448,7 +448,7 @@ bool DNAVector::SetToSubOf(const DNAVector & v, int start, int len)
     cout << "WARNING, given sequence does not contain the given start position" << endl;
     return false;
   } else if (start+len > v.size()) {
-    FILE_LOG(logWARNING) << "WARNING, adjusting boundaries in DNAVector::SetToSubOf (2)";
+    FILE_LOG(logDEBUG1) << "WARNING, adjusting boundaries in DNAVector::SetToSubOf (2)";
     len = v.size() - start;
   }
 
@@ -679,7 +679,7 @@ void DNAVector::ExtendWithString(const string& extension) {
 void DNAVector::ExtendWithString(const string& extension, int extendFrom) {
   FILE_LOG(logDEBUG3) << "Requesting extension from: " << extendFrom << " extension size: " << extension.size();
   if(extendFrom>isize() || extendFrom<0) { 
-    FILE_LOG(logWARNING) << "Requesting extension of sequence given wrong index";
+    FILE_LOG(logDEBUG1) << "Requesting extension of sequence given wrong index";
     return; 
   }
   int n = extension.size();
