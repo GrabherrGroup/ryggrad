@@ -190,13 +190,13 @@ bool parse()
       if (sIter==mCArgNames.end())
       { 
       if (n == "-print-command-line") {
-	cout << "----------------------- Welcome to Spines -------------------------------" << endl;
+	cout << "----------------------- Welcome to Ryggrad -------------------------------" << endl;
 	cout << "This module was invoked via:" << endl;
 	for (int k=0; k<mArgc; k++) {
 	  cout << mArgv[k] << " ";
 	}
 	cout << endl;
-	cout << "----------------------- Welcome to Spines -------------------------------" << endl << endl;
+	cout << "----------------------- Welcome to Ryggrad  -------------------------------" << endl << endl;
 	if ( mArgc == 2 ) {
 	  showHelp();
 	  exit(0);	  
@@ -414,7 +414,7 @@ void showHelp()
   if (mDesc != "")
     cout << mDesc << endl << endl;
   else
-    cout << "a module in the code base 'Spines'." << endl << endl;
+    cout << "a module in the code base 'Ryggrad'." << endl << endl;
   cout << "\nAvailable arguments:" << endl;
   cout << mHelp.str() << endl;
 }

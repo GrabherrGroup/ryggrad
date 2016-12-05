@@ -370,6 +370,10 @@ class KmerSuperAligner
 
   void SetMaxFreq(int i) {m_maxFreq = i;}
 
+  void SetFwdOnly(bool b) {
+    m_bFwdOnly = b;
+  }
+
   void SetUseCombmers(bool b) {
     m_bUseCombs = b;
   }
@@ -413,7 +417,7 @@ class KmerSuperAligner
   bool m_bUseProteins;
 
   bool m_bUseCore;
-
+  bool m_bFwdOnly;
   svec<KSAItem> m_dynArray;
   MatchScore m_matchScore;
   int m_lastBestScore;

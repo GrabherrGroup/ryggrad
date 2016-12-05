@@ -78,15 +78,6 @@ bool Contains(string &s, char * t)
 
 }
 
-
-bool ContainsAt(string &s, string &t, int at)
-{
-  string::size_type pos = s.find(t);
-  return ( (int) pos == at );
-}
-
-
-
 int Tokenize( const string &a_string,
 	      vector<char> &separators,
 	      vector<string> &tokens )

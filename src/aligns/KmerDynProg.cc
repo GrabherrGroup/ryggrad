@@ -132,6 +132,8 @@ KmerSuperAligner::KmerSuperAligner( ostream *log )
   m_lookAheadFrames = 16;
   m_lookAheadStep = 2;
   m_lookAheadMaxFreq = 1000;
+
+  m_bFwdOnly = false;
 }
 
 KmerSuperAligner::~KmerSuperAligner() 
@@ -407,9 +409,11 @@ void KmerSuperAligner::Align(SuperAlign & result,
       svec<KmerAlignCoreRecordWithScore> rc_matches;
       m_core.GetMatches(matches, kmerbases, 0);
       
-      kmerbases.ReverseComplement();
-      m_core.GetMatches(rc_matches, kmerbases, 0); 
- 
+      if (!m_bFwdOnly) {
+	kmerbases.ReverseComplement();
+	m_core.GetMatches(rc_matches, kmerbases, 0); 
+      }
+
       //cout << "RC Matches: " << rc_matches.isize() <<  " FW Matches: " << matches.isize() << endl;
 
       int skipSelfCount = 0;

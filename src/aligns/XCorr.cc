@@ -1,6 +1,6 @@
 #include "src/aligns/XCorr.h"
 #include <math.h>
-#include "extern/RealFFT/FFTReal.h"
+#include "../../extern/RealFFT/FFTReal.h"
 
 XCorrelation::XCorrelation()
 {
