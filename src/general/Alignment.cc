@@ -90,10 +90,8 @@ void Alignment::printFull(double pValLimit, ostream& sout, int screenWidth, bool
 }
 
 void Alignment::printMFAFormat(double pValLimit, ostream& sout, int screenWidth) const {
-  // WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!
-  int countQ = getQueryOffset()  + queryOrigOffset;
-  int countT = getTargetOffset() + targetOrigOffset;
-  // WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!
+  int countQ = getQueryOffset();
+  int countT = getTargetOffset();
   for( int i=0; i<=(int)(matchesStr.size()/screenWidth); i++) {
     string query = queryStr.substr(i*screenWidth,screenWidth); 
     int setwSize = max(getQuerySeq().Name().size(), getTargetSeq().Name().size()); 

@@ -114,24 +114,24 @@ public:
   virtual ~Alignment() {} 
 
   /** Get information available on the info object directly from the Alignment class */
-  int getTargetLength() const       { return info.getTargetLength();      }
-  int getQueryLength() const        { return info.getQueryLength();       }
-  int getTargetOffset() const       { return info.getTargetOffset();      }
-  int getQueryOffset() const        { return info.getQueryOffset();       }
-  int getTargetBaseAligned() const  { return info.getTargetBaseAligned(); }
-  int getQueryBaseAligned() const   { return info.getQueryBaseAligned();  }
-  int getMaxBaseAligned() const     { return info.getMaxBaseAligned();    }
-  int getMinBaseAligned() const     { return info.getMinBaseAligned();    }
-  int getBaseMatched() const        { return info.getBaseMatched();       }
-  int getAlignmentLen() const       { return info.getAlignmentLen();      }
-  int getSWScore() const            { return info.getSWScore();           }
-  double getRawScore() const        { return info.getRawScore();          }
-  double calcIdentityScore() const  { return info.calcIdentity();         }
-  double getIdentityScore()         { return info.getIdentity();          }
-  double getIdentityScore() const   { return info.getIdentity();          }
-  double getEValue()const           { return info.getEValue();            }
-  double getRuntime() const         { return info.getRuntime();           }
-  double getRuntimeCoef()const      { return info.getRuntimeCoef();       }
+  int getTargetLength() const       { return info.getTargetLength();                    }
+  int getQueryLength() const        { return info.getQueryLength();                     }
+  int getTargetOffset() const       { return info.getTargetOffset() + targetOrigOffset; }
+  int getQueryOffset() const        { return info.getQueryOffset() + queryOrigOffset;   }
+  int getTargetBaseAligned() const  { return info.getTargetBaseAligned();               }
+  int getQueryBaseAligned() const   { return info.getQueryBaseAligned();                }
+  int getMaxBaseAligned() const     { return info.getMaxBaseAligned();                  }
+  int getMinBaseAligned() const     { return info.getMinBaseAligned();                  }
+  int getBaseMatched() const        { return info.getBaseMatched();                     }
+  int getAlignmentLen() const       { return info.getAlignmentLen();                    }
+  int getSWScore() const            { return info.getSWScore();                         }
+  double getRawScore() const        { return info.getRawScore();                        }
+  double calcIdentityScore() const  { return info.calcIdentity();                       }
+  double getIdentityScore()         { return info.getIdentity();                        }
+  double getIdentityScore() const   { return info.getIdentity();                        }
+  double getEValue()const           { return info.getEValue();                          }
+  double getRuntime() const         { return info.getRuntime();                         }
+  double getRuntimeCoef()const      { return info.getRuntimeCoef();                     }
 
   /** Set information that is needed to be set external to the Alignment class */
   void setRuntime(double rt)        { info.runtime = rt; }
