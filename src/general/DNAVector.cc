@@ -463,8 +463,6 @@ bool DNAVector::SetToSubOf(const DNAVector & v, int start, int len)
       m_qual[i-start] = v.Qual(i);
     
   }
-  //Set the default name of the sequence
-  SetName(v.Name());
   return true;
 }
 
