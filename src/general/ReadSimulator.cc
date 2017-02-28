@@ -37,8 +37,8 @@ void ReadSimulator::generatePEReads(const vecDNAVector& inputSeqs, int interval,
 	    sprintf(strLeft, "%s#%d/1\\%d\\%d\\%d", inputSeqs.Name(j).c_str(), totCnt, pos1, len, totCnt);
 	    sprintf(strRight, "%s#%d/2\\%d\\%d\\%d", inputSeqs.Name(j).c_str(), totCnt, pos2, len, totCnt+1);
 	    totCnt+=2;
-            left_err.setName(strLeft);
-            right_err.setName(strRight);
+            left_err.SetName(strLeft);
+            right_err.SetName(strRight);
             addRead(left_err, pos1);
             addRead(right_err, pos2);
         }
