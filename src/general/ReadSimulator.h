@@ -2,12 +2,12 @@
 #define _READSIMULATOR_H_
 
 #include <string>
-#include "extern/logger/log.h"
-#include "base/FileParser.h"
-#include "src/DNAVector.h"
-#include "base/StringUtil.h"
-#include "base/RandomStuff.h"
-#include "src/Ananas/ReadOverlap.h"
+#include "../base/Logger.h"
+#include "../base/FileParser.h"
+#include "DNAVector.h"
+#include "../base/StringUtil.h"
+#include "../base/RandomStuff.h"
+//#include "src/Ananas/ReadOverlap.h"
 
 class ReadSimulator {
 public:
@@ -21,7 +21,7 @@ public:
 
     void addRead(const DNAVector& read, int offset) { m_reads.push_back(read); }
 
-    void findAllOverlaps(AllReadOverlaps& allOverlaps, int minOverlap);
+//    void findAllOverlaps(AllReadOverlaps& allOverlaps, int minOverlap);
 
     void writeReads(ostream& sout); 
 

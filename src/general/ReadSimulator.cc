@@ -2,7 +2,7 @@
 #define NDEBUG
 #endif
 
-#include "test/ReadSimulator.h"
+#include "ReadSimulator.h"
  
 
 //======================================================
@@ -45,7 +45,7 @@ void ReadSimulator::generatePEReads(const vecDNAVector& inputSeqs, int interval,
     }
     sortReads();
 }
-
+/*
 void ReadSimulator::findAllOverlaps(AllReadOverlaps& allOverlaps, int minOverlap) {
      FILE_LOG(logINFO) << "Finding overlaps";
     for (int i=0; i<(int)m_reads.size(); i++) {
@@ -80,7 +80,7 @@ void ReadSimulator::findAllOverlaps(AllReadOverlaps& allOverlaps, int minOverlap
         }
     }
 }
-
+*/
 void ReadSimulator::writeReads(ostream& sout) {
     vector<char> separators;
     separators.push_back('\\');
