@@ -113,7 +113,15 @@ long long BinSearchFuzzy(svec<T> & v, const T & item)
   typename svec<T>::iterator end = v.end();
   iter = lower_bound(begin, end, item);
   long pos = distance(begin, iter);
-  
+
+  if (pos == v.isize()) {
+    pos--;
+  } else {
+
+    if (item < v[pos])
+      pos--;
+  }
+
   if (pos < 0)
     return -1;
 
