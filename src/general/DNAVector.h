@@ -614,6 +614,7 @@ class vecDNAVector
   void Read(const string & fileName, bool bProteins = false, bool shortName = false, bool allUpper = true, bool bAppend = false); // Note: it can read multiple fasta files if they are separated by a comma
   void Read(const string & fileName, svec<string> & names);
   void ReadQ(const string & fileName); // Reads a fastq file
+  void ReadQ(const string & fileName, svec<string> & q); // Reads a fastq file and returns the qual strings
   void ReadOne(const string & fileName, bool bProteins = false, bool shortName = false, bool allUpper = true, bool bAppend = false); // Reads one single fasta file
 
 

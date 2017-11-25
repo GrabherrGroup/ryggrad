@@ -114,8 +114,8 @@ public:
   virtual ~Alignment() {} 
 
   /** Get information available on the info object directly from the Alignment class */
-  int getTargetLength() const       { return info.getTargetLength();                    }
-  int getQueryLength() const        { return info.getQueryLength();                     }
+  int getTargetLength() const       { return info.getTargetLength() + targetOrigOffset; }
+  int getQueryLength() const        { return info.getQueryLength() + queryOrigOffset;   }
   int getTargetOffset() const       { return info.getTargetOffset() + targetOrigOffset; }
   int getQueryOffset() const        { return info.getQueryOffset() + queryOrigOffset;   }
   int getTargetBaseAligned() const  { return info.getTargetBaseAligned();               }
