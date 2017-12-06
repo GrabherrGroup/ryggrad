@@ -133,6 +133,9 @@ public:
   double getRuntime() const         { return info.getRuntime();                         }
   double getRuntimeCoef()const      { return info.getRuntimeCoef();                     }
 
+  string getTargetName() const      { return targetSeq.Name();                          }
+  string getQueryName() const       { return querySeq.Name();                           }
+
   /** Set information that is needed to be set external to the Alignment class */
   void setRuntime(double rt)        { info.runtime = rt; }
   void setRuntimeFactor(double rtc) { info.runtimeCoef = rtc; }
