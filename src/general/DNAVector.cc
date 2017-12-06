@@ -1159,6 +1159,31 @@ void vecDNAVector::ReadQuals(const string & fileName)
   }
 }
 
+void vecDNAVector::ReadQ(const string & fileName, svec<string> & q) // Reads a fastq file
+{
+  FlatFileParser parser;  
+  parser.Open(fileName);
+  cout << "Reading FASTQ format: " << fileName << endl;
+  while (parser.ParseLine()) {
+    if (parser.GetItemCount() == 0)
+      continue;
+    string n = ">" + parser.Line();
+    parser.ParseLine();
+    const string & s = parser.Line();
+    DNAVector d;
+    d.SetFromBases(s);
+    // Not really efficient...
+    //cout << n << " " << s << endl;
+    push_back(d, n);
+
+    parser.ParseLine();
+    parser.ParseLine();
+    q.push_back(parser.Line());
+  }
+  //cout << "Sequences: " << isize() << endl;
+  setupMap();
+ 
+}
 
 void vecDNAVector::ReadQ(const string & fileName) // Reads a fastq file
 {

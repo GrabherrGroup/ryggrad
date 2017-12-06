@@ -111,6 +111,7 @@ double StringParser::AsFloat(int i)
 //=======================================================
 FlatFileParser::FlatFileParser() : StringParser()
 {
+  m_fromRedir = false;
 }
 
 FlatFileParser::FlatFileParser(const string & fileName)
@@ -139,15 +140,25 @@ bool FlatFileParser::Exists(const string &fileName)
 
 bool FlatFileParser::ParseLine()
 {
-  if (m_file.IsEnd())
-    return false;
   CMString line;
-  m_file.ReadLine(line);
+  if (!m_fromRedir) {
+    if (m_file.IsEnd())
+      return false;
+    m_file.ReadLine(line);
+  } else {
+    char buffer[4096];
+    if (fgets(buffer, sizeof(buffer) , stdin) == NULL) {
+      return false;
+    }
+    buffer[strlen(buffer)-1] = 0;
+    line = buffer;
+  }
 
-  SetLine((const char*)line);
-
-  m_line = line;
   
+  SetLine((const char*)line);
+  
+  m_line = line;
+
   return true;
 }
 
