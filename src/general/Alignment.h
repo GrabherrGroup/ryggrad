@@ -30,12 +30,12 @@ public:
   AlignmentInfo(int tl=-1, int ql=-1, int to=-1, int qo=-1, 
                 int tba=-1, int qba=-1, int tm=-1, int al=0, int sws= -1,
                 double rs=-1, double rt=-1, double rtc=-1, double id=-1, double eval=-1,
-                const string& tName="", const string& qName="")
+                const string& tN="", const string& qN="")
     :tLen(tl), qLen(ql),
      tOffset(to), qOffset(qo), tBaseAligned(tba),
      qBaseAligned(qba), baseMatched(tm), alignmentLen(al), 
      smithWatermanScore(sws), rawScore(rs),
-     runtime(rt), runtimeCoef(rtc), identity(id), eValue(eval), targetName(tName), queryName(qName) {}
+     runtime(rt), runtimeCoef(rtc), identity(id), eValue(eval), tName(tN), qName(qN) {}
 
   ~AlignmentInfo() {} 
 
@@ -58,8 +58,8 @@ public:
   double getEValue()const             { return eValue;                          }
   double getIdentity()                { return (identity==-1)?identity=calcIdentity():identity; }
   double getIdentity()const           { return (identity==-1)?calcIdentity():identity; }
-  const string& getTargetName() const { return targetName;                      }
-  const string& getQueryName() const  { return queryName;                       }
+  const string& getTargetName() const { return tName;                           }
+  const string& getQueryName() const  { return qName;                           }
 
   /** 
    * Use to obtain the identity score of the alignment.
@@ -90,8 +90,8 @@ protected:
   double runtimeCoef;     /// Factor by which runtime increases as opposed to basic SW
   double identity;        /// The number of matches over the entire length of the alignment
   double eValue;          /// The expected chance of obtaining such alignment by chance (For database search)
-  string targetName;      /// Query name and target name are being added so that the alignment info object 
-  string queryName;       // can be used in many circumstances in replacement of the entire alignment object.
+  string tName;           /// Query name and target name are being added so that the alignment info object 
+  string qName;           // can be used in many circumstances in replacement of the entire alignment object.
 };
 
 //===================================================================
@@ -112,8 +112,10 @@ public:
      targetIdxsInQuery(tSeq.size(), -1), queryIdxsInTarget(qSeq.size(), -1), 
      targetOrigOffset(0) , queryOrigOffset(0), targetSeqStrand('+'), querySeqStrand('+') {
 
-    info.qLen = qSeq.size();
-    info.tLen = tSeq.size();
+    info.qLen    = qSeq.size();
+    info.tLen    = tSeq.size();
+    info.qName   = qSeq.Name();
+    info.tName   = tSeq.Name();
   }
 
   virtual ~Alignment() {} 
