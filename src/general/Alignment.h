@@ -29,34 +29,37 @@ public:
   // Ctor  - Can be used as default with no params or given as many of the params in order as available
   AlignmentInfo(int tl=-1, int ql=-1, int to=-1, int qo=-1, 
                 int tba=-1, int qba=-1, int tm=-1, int al=0, int sws= -1,
-                double rs=-1, double rt=-1, double rtc=-1, double id=-1, double eval=-1)
+                double rs=-1, double rt=-1, double rtc=-1, double id=-1, double eval=-1,
+                const string& tName="", const string& qName="")
     :tLen(tl), qLen(ql),
      tOffset(to), qOffset(qo), tBaseAligned(tba),
      qBaseAligned(qba), baseMatched(tm), alignmentLen(al), 
      smithWatermanScore(sws), rawScore(rs),
-     runtime(rt), runtimeCoef(rtc), identity(id), eValue(eval) {}
+     runtime(rt), runtimeCoef(rtc), identity(id), eValue(eval), targetName(tName), queryName(qName) {}
 
   ~AlignmentInfo() {} 
 
-  int getTargetLength() const       { return tLen;                            }
-  int getQueryLength() const        { return qLen;                            }
-  int getTargetOffset() const       { return tOffset;                         }
-  int getQueryOffset() const        { return qOffset;                         }
-  int getTargetStop() const         { return (tOffset+tBaseAligned-1);        }
-  int getQueryStop() const          { return (qOffset+qBaseAligned-1);        }
-  int getTargetBaseAligned() const  { return tBaseAligned;                    }
-  int getQueryBaseAligned() const   { return qBaseAligned;                    }
-  int getMaxBaseAligned() const     { return max(tBaseAligned, qBaseAligned); }
-  int getMinBaseAligned() const     { return min(tBaseAligned, qBaseAligned); }
-  int getAlignmentLen() const       { return alignmentLen;                    }
-  int getBaseMatched() const        { return baseMatched;                     }
-  int getSWScore() const            { return smithWatermanScore;              }
-  double getRawScore()  const       { return rawScore;                        }
-  double getRuntime() const         { return runtime;                         }
-  double getRuntimeCoef()const      { return runtimeCoef;                     }
-  double getEValue()const           { return eValue;                          }
-  double getIdentity()              { return (identity==-1)?identity=calcIdentity():identity; }
-  double getIdentity()const         { return (identity==-1)?calcIdentity():identity; }
+  int getTargetLength() const         { return tLen;                            }
+  int getQueryLength() const          { return qLen;                            }
+  int getTargetOffset() const         { return tOffset;                         }
+  int getQueryOffset() const          { return qOffset;                         }
+  int getTargetStop() const           { return (tOffset+tBaseAligned-1);        }
+  int getQueryStop() const            { return (qOffset+qBaseAligned-1);        }
+  int getTargetBaseAligned() const    { return tBaseAligned;                    }
+  int getQueryBaseAligned() const     { return qBaseAligned;                    }
+  int getMaxBaseAligned() const       { return max(tBaseAligned, qBaseAligned); }
+  int getMinBaseAligned() const       { return min(tBaseAligned, qBaseAligned); }
+  int getAlignmentLen() const         { return alignmentLen;                    }
+  int getBaseMatched() const          { return baseMatched;                     }
+  int getSWScore() const              { return smithWatermanScore;              }
+  double getRawScore()  const         { return rawScore;                        }
+  double getRuntime() const           { return runtime;                         }
+  double getRuntimeCoef()const        { return runtimeCoef;                     }
+  double getEValue()const             { return eValue;                          }
+  double getIdentity()                { return (identity==-1)?identity=calcIdentity():identity; }
+  double getIdentity()const           { return (identity==-1)?calcIdentity():identity; }
+  const string& getTargetName() const { return targetName;                      }
+  const string& getQueryName() const  { return queryName;                       }
 
   /** 
    * Use to obtain the identity score of the alignment.
@@ -87,6 +90,8 @@ protected:
   double runtimeCoef;     /// Factor by which runtime increases as opposed to basic SW
   double identity;        /// The number of matches over the entire length of the alignment
   double eValue;          /// The expected chance of obtaining such alignment by chance (For database search)
+  string targetName;      /// Query name and target name are being added so that the alignment info object 
+  string queryName;       // can be used in many circumstances in replacement of the entire alignment object.
 };
 
 //===================================================================
@@ -133,8 +138,8 @@ public:
   double getRuntime() const         { return info.getRuntime();                         }
   double getRuntimeCoef()const      { return info.getRuntimeCoef();                     }
 
-  string getTargetName() const      { return targetSeq.Name();                          }
-  string getQueryName() const       { return querySeq.Name();                           }
+  string getTargetName() const      { return info.getTargetName();                      }
+  string getQueryName() const       { return info.getQueryName();                       }
 
   /** Set information that is needed to be set external to the Alignment class */
   void setRuntime(double rt)        { info.runtime = rt; }
