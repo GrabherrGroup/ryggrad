@@ -163,6 +163,8 @@ public:
   char getTargetStrand() const      { return info.getTargetStrand();                    }
   char getQueryStrand() const       { return info.getQueryStrand();                     }
 
+  const AlignmentInfo& getInfo()   { return info;                                       }
+
   /** Set information that is needed to be set external to the Alignment class */
   void setRuntime(double rt)        { info.runtime = rt; }
   void setRuntimeFactor(double rtc) { info.runtimeCoef = rtc; }
@@ -173,6 +175,7 @@ public:
   /** Setter function for the auxillary information related to the query/target sequences */
   void setSeqAuxInfo(int targetOrigOffset, int queryOrigOffset, char targetSeqStrand, char querySeqStrand); 
   void setSeqAuxInfo(int tOrigOffset, int qOrigOffset, bool tSeqStrand, bool qSeqStrand); 
+
 
   /**
    * Prints either the full alignment or info in CSV format 
