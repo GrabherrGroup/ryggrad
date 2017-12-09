@@ -117,6 +117,7 @@ FlatFileParser::FlatFileParser() : StringParser()
 FlatFileParser::FlatFileParser(const string & fileName)
 {
   m_file.Open(fileName.c_str());
+  m_fromRedir = false;
 }
 
 FlatFileParser::~FlatFileParser()
@@ -125,6 +126,9 @@ FlatFileParser::~FlatFileParser()
 }
 void FlatFileParser::Open(const string & fileName)
 {
+  if (fileName == "")
+    m_fromRedir = true;
+
   m_file.Open(fileName.c_str());    
 }
 
