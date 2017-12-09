@@ -29,35 +29,48 @@ public:
   // Ctor  - Can be used as default with no params or given as many of the params in order as available
   AlignmentInfo(int tl=-1, int ql=-1, int to=-1, int qo=-1, 
                 int tba=-1, int qba=-1, int tm=-1, int al=0, int sws= -1,
-                double rs=-1, double rt=-1, double rtc=-1, double id=-1, double eval=-1)
+                double rs=-1, double rt=-1, double rtc=-1, double id=-1, double eval=-1,
+                const string& tN="", const string& qN="")
     :tLen(tl), qLen(ql),
      tOffset(to), qOffset(qo), tBaseAligned(tba),
      qBaseAligned(qba), baseMatched(tm), alignmentLen(al), 
      smithWatermanScore(sws), rawScore(rs),
-     runtime(rt), runtimeCoef(rtc), identity(id), eValue(eval) {}
+     runtime(rt), runtimeCoef(rtc), identity(id), eValue(eval), tName(tN), qName(qN), 
+     tOrigOffset(0) , qOrigOffset(0), tSeqStrand('+'), qSeqStrand('+') {}
 
   ~AlignmentInfo() {} 
 
-  int getTargetLength() const       { return tLen;                            }
-  int getQueryLength() const        { return qLen;                            }
-  int getTargetOffset() const       { return tOffset;                         }
-  int getQueryOffset() const        { return qOffset;                         }
-  int getTargetStop() const         { return (tOffset+tBaseAligned-1);        }
-  int getQueryStop() const          { return (qOffset+qBaseAligned-1);        }
-  int getTargetBaseAligned() const  { return tBaseAligned;                    }
-  int getQueryBaseAligned() const   { return qBaseAligned;                    }
-  int getMaxBaseAligned() const     { return max(tBaseAligned, qBaseAligned); }
-  int getMinBaseAligned() const     { return min(tBaseAligned, qBaseAligned); }
-  int getAlignmentLen() const       { return alignmentLen;                    }
-  int getBaseMatched() const        { return baseMatched;                     }
-  int getSWScore() const            { return smithWatermanScore;              }
-  double getRawScore()  const       { return rawScore;                        }
-  double getRuntime() const         { return runtime;                         }
-  double getRuntimeCoef()const      { return runtimeCoef;                     }
-  double getEValue()const           { return eValue;                          }
-  double getIdentity()              { return (identity==-1)?identity=calcIdentity():identity; }
-  double getIdentity()const         { return (identity==-1)?calcIdentity():identity; }
+  int getTargetLength() const         { return tLen;                               }
+  int getQueryLength() const          { return qLen;                               }
+  int getTargetOffset() const         { return tOffset + tOrigOffset;              }
+  int getQueryOffset() const          { return qOffset + qOrigOffset;              }
+  int getTargetStop() const           { return (getTargetOffset()+tBaseAligned-1); }
+  int getQueryStop() const            { return (getQueryOffset()+qBaseAligned-1);  }
+  int getTargetBaseAligned() const    { return tBaseAligned;                       }
+  int getQueryBaseAligned() const     { return qBaseAligned;                       }
+  int getMaxBaseAligned() const       { return max(tBaseAligned, qBaseAligned);    }
+  int getMinBaseAligned() const       { return min(tBaseAligned, qBaseAligned);    }
+  int getAlignmentLen() const         { return alignmentLen;                       }
+  int getBaseMatched() const          { return baseMatched;                        }
+  int getSWScore() const              { return smithWatermanScore;                 }
+  double getRawScore()  const         { return rawScore;                           }
+  double getRuntime() const           { return runtime;                            }
+  double getRuntimeCoef()const        { return runtimeCoef;                        }
+  double getEValue()const             { return eValue;                             }
+  double getIdentity()                { return (identity==-1)?identity=calcIdentity():identity; }
+  double getIdentity()const           { return (identity==-1)?calcIdentity():identity; }
+  const string& getTargetName() const { return tName;                              }
+  const string& getQueryName() const  { return qName;                              }
+  char getTargetStrand() const        { return tSeqStrand;                         }
+  char getQueryStrand() const         { return qSeqStrand;                         }
 
+  /** Setter function for the auxillary information related to the query/target sequences */
+  void setSeqAuxInfo(int targetOrigOffset, int queryOrigOffset, char targetSeqStrand, char querySeqStrand); 
+  void setSeqAuxInfo(int tOrigOffset, int qOrigOffset, bool tSeqStrand, bool qSeqStrand); 
+
+  /** Getter function for the auxillary information related to the query/target sequences */
+  void getSeqAuxInfo(int& tOrigOffset, int& qOrigOffset, char& tSeqStrand, char& qSeqStrand); 
+ 
   /** 
    * Use to obtain the identity score of the alignment.
    * The identitiy score is the ratio of the basepair matches 
@@ -87,6 +100,16 @@ protected:
   double runtimeCoef;     /// Factor by which runtime increases as opposed to basic SW
   double identity;        /// The number of matches over the entire length of the alignment
   double eValue;          /// The expected chance of obtaining such alignment by chance (For database search)
+  string tName;           /// Query name and target name are being added so that the alignment info object 
+  string qName;           // can be used in many circumstances in replacement of the entire alignment object.
+
+  //Extra info about the target/query sequences
+  int tOrigOffset;        /// Original offset of the target sequence if it was extracted from a longer sequence
+  int qOrigOffset;        /// Original offset of the query sequence if it was extracted from a longer sequence
+  char tSeqStrand;        /// Target sequence strand
+  char qSeqStrand;        /// Query sequence strand
+
+
 };
 
 //===================================================================
@@ -104,20 +127,21 @@ public:
             const string& tStr = string(), const string& qStr = string(), const string& mStr = string())
     :targetSeq(tSeq), querySeq(qSeq), info(inf), targetStr(tStr), 
      queryStr(qStr), matchesStr(mStr) ,
-     targetIdxsInQuery(tSeq.size(), -1), queryIdxsInTarget(qSeq.size(), -1), 
-     targetOrigOffset(0) , queryOrigOffset(0), targetSeqStrand('+'), querySeqStrand('+') {
+     targetIdxsInQuery(tSeq.size(), -1), queryIdxsInTarget(qSeq.size(), -1) { 
 
-    info.qLen = qSeq.size();
-    info.tLen = tSeq.size();
+    info.qLen    = qSeq.size();
+    info.tLen    = tSeq.size();
+    info.qName   = qSeq.Name();
+    info.tName   = tSeq.Name();
   }
 
   virtual ~Alignment() {} 
 
   /** Get information available on the info object directly from the Alignment class */
-  int getTargetLength() const       { return info.getTargetLength() + targetOrigOffset; }
-  int getQueryLength() const        { return info.getQueryLength() + queryOrigOffset;   }
-  int getTargetOffset() const       { return info.getTargetOffset() + targetOrigOffset; }
-  int getQueryOffset() const        { return info.getQueryOffset() + queryOrigOffset;   }
+  int getTargetLength() const       { return info.getTargetLength();                    }
+  int getQueryLength() const        { return info.getQueryLength();                     }
+  int getTargetOffset() const       { return info.getTargetOffset();                    }
+  int getQueryOffset() const        { return info.getQueryOffset();                     }
   int getTargetBaseAligned() const  { return info.getTargetBaseAligned();               }
   int getQueryBaseAligned() const   { return info.getQueryBaseAligned();                }
   int getMaxBaseAligned() const     { return info.getMaxBaseAligned();                  }
@@ -133,6 +157,14 @@ public:
   double getRuntime() const         { return info.getRuntime();                         }
   double getRuntimeCoef()const      { return info.getRuntimeCoef();                     }
 
+  string getTargetName() const      { return info.getTargetName();                      }
+  string getQueryName() const       { return info.getQueryName();                       }
+
+  char getTargetStrand() const      { return info.getTargetStrand();                    }
+  char getQueryStrand() const       { return info.getQueryStrand();                     }
+
+  const AlignmentInfo& getInfo()   { return info;                                       }
+
   /** Set information that is needed to be set external to the Alignment class */
   void setRuntime(double rt)        { info.runtime = rt; }
   void setRuntimeFactor(double rtc) { info.runtimeCoef = rtc; }
@@ -143,6 +175,7 @@ public:
   /** Setter function for the auxillary information related to the query/target sequences */
   void setSeqAuxInfo(int targetOrigOffset, int queryOrigOffset, char targetSeqStrand, char querySeqStrand); 
   void setSeqAuxInfo(int tOrigOffset, int qOrigOffset, bool tSeqStrand, bool qSeqStrand); 
+
 
   /**
    * Prints either the full alignment or info in CSV format 
@@ -251,12 +284,6 @@ protected:
   /// relatively low cost and to save from recalculation on every use
   vector<int> targetIdxsInQuery;     /// The corresponding indexes of target sequence in the alignment
   vector<int> queryIdxsInTarget;     /// The corresponding indexes of query sequence in the alignment
-
-  //Extra info about the target/query sequences
-  int targetOrigOffset;              /// Original offset of the target sequence if it was extracted from a longer sequence
-  int queryOrigOffset;               /// Original offset of the query sequence if it was extracted from a longer sequence
-  char targetSeqStrand;              /// Target sequence strand
-  char querySeqStrand;               /// Query sequence strand
 
 };
 

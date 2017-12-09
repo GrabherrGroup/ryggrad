@@ -9,24 +9,15 @@
 
 //=====================================================================
 void Alignment::getSeqAuxInfo(int& tOrigOffset, int& qOrigOffset, char& tSeqStrand, char& qSeqStrand) {
-  tOrigOffset      = targetOrigOffset;              
-  qOrigOffset      = queryOrigOffset;          
-  tSeqStrand       = targetSeqStrand;        
-  qSeqStrand       = querySeqStrand;              
+  info.getSeqAuxInfo(tOrigOffset, qOrigOffset, tSeqStrand, qSeqStrand);
 } 
 
 void Alignment::setSeqAuxInfo(int tOrigOffset, int qOrigOffset, char tSeqStrand, char qSeqStrand) {
-  targetOrigOffset = tOrigOffset;              
-  queryOrigOffset  = qOrigOffset;          
-  targetSeqStrand  = tSeqStrand;        
-  querySeqStrand   = qSeqStrand;              
+  info.setSeqAuxInfo(tOrigOffset, qOrigOffset, tSeqStrand, qSeqStrand);              
 } 
 
 void Alignment::setSeqAuxInfo(int tOrigOffset, int qOrigOffset, bool tSeqStrand, bool qSeqStrand) {
-  targetOrigOffset = tOrigOffset;              
-  queryOrigOffset  = qOrigOffset;          
-  targetSeqStrand  = (tSeqStrand?'+':'-');   
-  querySeqStrand   = (qSeqStrand?'+':'-');              
+  info.setSeqAuxInfo(tOrigOffset, qOrigOffset, tSeqStrand, qSeqStrand);              
 }
 
 void Alignment::print(int outputType, double pValLimit, ostream& sout, int screenWidth, bool withInfo) const{
@@ -95,11 +86,11 @@ void Alignment::printMFAFormat(double pValLimit, ostream& sout, int screenWidth)
   for( int i=0; i<=(int)(matchesStr.size()/screenWidth); i++) {
     string query = queryStr.substr(i*screenWidth,screenWidth); 
     int setwSize = max(getQuerySeq().Name().size(), getTargetSeq().Name().size()); 
-    sout << std::left << setw(setwSize) << getQuerySeq().Name() << " " <<  querySeqStrand << " "  << std::right << setw(10) << countQ  << " "
+    sout << std::left << setw(setwSize) << getQuerySeq().Name() << " " <<  getQueryStrand() << " "  << std::right << setw(10) << countQ  << " "
          << query << " " 
          << countQ + CountValid(query)-1 << endl
          << std::left << setw(setwSize+14) << " " << matchesStr.substr(i*screenWidth,screenWidth) << endl
-         << std::left << setw(setwSize) << getTargetSeq().Name() << " " <<  targetSeqStrand  << " " << std::right  << setw(10) << countT << " " 
+         << std::left << setw(setwSize) << getTargetSeq().Name() << " " <<  getTargetStrand()  << " " << std::right  << setw(10) << countT << " " 
          << targetStr.substr(i*screenWidth,screenWidth) << " " 
          << countT + CountValid(targetStr.substr(i*screenWidth,screenWidth)) - 1 << endl
          << endl << endl << endl;
@@ -260,4 +251,26 @@ void AlignmentInfo::resetCalculations(int tos, int qos) {
 double AlignmentInfo::calcIdentity() const {
   return double(baseMatched)/getMaxBaseAligned();
 }
+
+void AlignmentInfo::getSeqAuxInfo(int& tOffset, int& qOffset, char& tStrand, char& qStrand) {
+  tOffset   = tOrigOffset;              
+  qOffset   = qOrigOffset;          
+  tStrand   = tSeqStrand;        
+  qStrand   = qSeqStrand;              
+} 
+
+void AlignmentInfo::setSeqAuxInfo(int tOffset, int qOffset, char tStrand, char qStrand) {
+  tOrigOffset = tOffset;              
+  qOrigOffset  = qOffset;          
+  tSeqStrand   = tStrand;        
+  qSeqStrand   = qStrand;              
+} 
+
+void AlignmentInfo::setSeqAuxInfo(int tOffset, int qOffset, bool tStrand, bool qStrand) {
+  tOrigOffset = tOffset;              
+  qOrigOffset  = qOffset;          
+  tSeqStrand  = (tStrand?'+':'-');   
+  qSeqStrand   = (qStrand?'+':'-');              
+}
+
 
