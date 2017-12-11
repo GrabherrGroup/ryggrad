@@ -40,8 +40,8 @@ public:
 
   ~AlignmentInfo() {} 
 
-  int getTargetLength() const         { return tLen;                               }
-  int getQueryLength() const          { return qLen;                               }
+  int getTargetLength() const         { return tLen + tOrigOffset;                 }
+  int getQueryLength() const          { return qLen + qOrigOffset;                 }
   int getTargetOffset() const         { return tOffset + tOrigOffset;              }
   int getQueryOffset() const          { return qOffset + qOrigOffset;              }
   int getTargetStop() const           { return (getTargetOffset()+tBaseAligned-1); }
